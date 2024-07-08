@@ -1,4 +1,5 @@
 import { Repository } from "typeorm";
+
 import { User } from "../../domain/entities/User";
 import { UserRepository } from "../../domain/repositories/UserRepository";
 import { AppDataSource } from "../database/data-source";
