@@ -2,8 +2,8 @@ import express from "express";
 
 import { handleErrors } from "./middleware/errors";
 
-import productRoutes from "./productRoutes";
-import userRoutes from "./userRoutes";
+import productRoutes from "./routes/productRoutes";
+import userRoutes from "./routes/userRoutes";
 
 const app = express();
 

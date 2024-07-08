@@ -1,30 +1,35 @@
 import { Request, Response, NextFunction } from "express";
 
-import { UserService } from "../../domain/services/UserService";
-import { AppError } from "../../interfaces/http/middleware/errors";
+import { CreateUserUseCase } from "../use-cases/user/CreateUserUseCase";
+import { GetUserByIdUseCase } from "../use-cases/user/GetUserByIdUseCase";
+import { UpdateUserUseCase } from "../use-cases/user/UpdateUserUseCase";
+import { DeleteUserUseCase } from "../use-cases/user/DeleteUserUseCase";
+import { AuthenticateUserUseCase } from "../use-cases/user/AuthenticateUserUseCase";
 
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private createUserUseCase: CreateUserUseCase,
+    private getUserByIdUseCase: GetUserByIdUseCase,
+    private updateUserUseCase: UpdateUserUseCase,
+    private deleteUserUseCase: DeleteUserUseCase,
+    private authenticateUserUseCase: AuthenticateUserUseCase
+  ) {}
 
   async register(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { name, email, password, isAdmin } = req.body;
     try {
-      const user = await this.userService.registerUser(name, email, password, isAdmin);
+      const user = await this.createUserUseCase.execute({ name, email, password, isAdmin });
       res.status(201).json(user);
     } catch (error: any) {
-      next(new AppError(error.message));
+      next(error);
     }
   }
 
   async getUser(req: Request, res: Response, next: NextFunction): Promise<void> {
     const id = req.params.id;
     try {
-      const user = await this.userService.getUserById(id);
-      if (user) {
-        res.status(200).json(user);
-      } else {
-        next(new AppError("User not found", 404));
-      }
+      const user = await this.getUserByIdUseCase.execute(id);
+      res.status(200).json(user);
     } catch (error: any) {
       next(error);
     }
@@ -34,30 +39,30 @@ export class UserController {
     const id = req.params.id;
     const updateData = req.body;
     try {
-      const user = await this.userService.updateUser(id, updateData);
+      const user = await this.updateUserUseCase.execute({ id, ...updateData });
       res.status(200).json(user);
     } catch (error: any) {
-      next(new AppError(error.message));
+      next(error);
     }
   }
 
   async deleteUser(req: Request, res: Response, next: NextFunction): Promise<void> {
     const id = req.params.id;
     try {
-      await this.userService.deleteUser(id);
+      await this.deleteUserUseCase.execute(id);
       res.status(204).send();
     } catch (error: any) {
-      next(new AppError(error.message));
+      next(error);
     }
   }
 
   async authenticateUser(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { email, password } = req.body;
     try {
-      const user = await this.userService.authenticateUser(email, password);
+      const user = await this.authenticateUserUseCase.execute({ email, password });
       res.status(200).json(user);
     } catch (error: any) {
-      next(new AppError(error.message, 401));
+      next(error);
     }
   }
 }

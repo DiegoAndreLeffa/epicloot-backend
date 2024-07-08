@@ -1,4 +1,3 @@
-// src/infrastructure/repositories/TypeORMUserRepository.ts
 import { Repository } from "typeorm";
 import { User } from "../../domain/entities/User";
 import { UserRepository } from "../../domain/repositories/UserRepository";
