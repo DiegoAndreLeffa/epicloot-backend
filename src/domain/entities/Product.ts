@@ -12,7 +12,7 @@ import { Review } from "./Review";
 
 @Entity("product")
 export class Product {
-    @PrimaryGeneratedColumn("uuid")
+    @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column({ type: "varchar" })
@@ -24,7 +24,7 @@ export class Product {
     @Column({ type: "decimal" })
     price: number;
 
-    @ManyToOne(() => Category, (category) => category.products)
+    @ManyToOne(() => Category, (category) => category.products, { cascade: true })
     category: Category;
 
     @OneToMany(() => CartItem, (cartItem) => cartItem.product)

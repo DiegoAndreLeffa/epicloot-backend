@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { ProductController } from "../../../application/controllers/ProductController";
 import { TypeORMProductRepository } from "../../../infrastructure/repositories/TypeORMProductRepository";
+import { TypeORMCategoryRepository } from "../../../infrastructure/repositories/TypeORMCategoryRepository";
 import { CreateProductUseCase } from "../../../application/use-cases/product/CreateProductUseCase";
 import { GetProductByIdUseCase } from "../../../application/use-cases/product/GetProductByIdUseCase";
 import { GetAllProductsUseCase } from "../../../application/use-cases/product/GetAllProductsUseCase";
@@ -12,8 +13,9 @@ import { createProductSchema, updateProductSchema } from "../schemas/productSche
 const router = Router();
 
 const productRepository = new TypeORMProductRepository();
+const categoryRepository = new TypeORMCategoryRepository();
 
-const createProductUseCase = new CreateProductUseCase(productRepository);
+const createProductUseCase = new CreateProductUseCase(productRepository, categoryRepository);
 const getProductByIdUseCase = new GetProductByIdUseCase(productRepository);
 const getAllProductsUseCase = new GetAllProductsUseCase(productRepository);
 const updateProductUseCase = new UpdateProductUseCase(productRepository);

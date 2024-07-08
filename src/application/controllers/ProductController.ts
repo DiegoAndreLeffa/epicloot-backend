@@ -16,9 +16,9 @@ export class ProductController {
   ) {}
 
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const { name, description, price, stock, categoryId } = req.body;
+    const { name, description, price, categoryName } = req.body;
     try {
-      const product = await this.createProductUseCase.execute({ name, description, price, stock, categoryId });
+      const product = await this.createProductUseCase.execute({ name, description, price, categoryName });
       res.status(201).json(product);
     } catch (error: any) {
       next(error);
