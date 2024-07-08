@@ -1,11 +1,11 @@
 import { Router } from "express";
 
-import { TypeORMUserRepository } from "../../infrastructure/repositories/TypeORMUserRepository";
-import { UserController } from "../../application/controllers/UserController";
-import { UserService } from "../../domain/services/UserService";
 import { validateSchema } from "./middleware/validateSchema";
 import { registerUserSchema, updateUserSchema, authenticateUserSchema } from "./schemas/userSchemas";
 
+import { TypeORMUserRepository } from "../../infrastructure/repositories/TypeORMUserRepository";
+import { UserController } from "../../application/controllers/UserController";
+import { UserService } from "../../domain/services/UserService";
 
 const router = Router();
 
