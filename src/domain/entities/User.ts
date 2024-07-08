@@ -26,6 +26,9 @@ export class User {
     @Column({ type: "varchar" })
     password: string;
 
+    @Column({ type: "boolean", default: false })
+    isAdmin: boolean;
+
     @Column({ type: "timestamp" })
     registrationDate: Date;
 

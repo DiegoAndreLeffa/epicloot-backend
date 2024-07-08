@@ -76,3 +76,7 @@ src/
 │   │   │   └── errors.ts
 │   │   └── server.ts
 └── main.ts
+
+
+npm run typeorm migration:generate ./src/infrastructure/database/migrations/AddColumnIsAdminForUserEntity -- -d ./src/infrastructure/database/data-source.ts
+npm run typeorm migration:run -- -d ./src/infrastructure/database/data-source.ts

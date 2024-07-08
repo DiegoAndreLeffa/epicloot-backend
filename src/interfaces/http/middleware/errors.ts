@@ -1,4 +1,3 @@
-// src/interfaces/http/middleware/errors.ts
 import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
 
@@ -25,7 +24,9 @@ export const handleErrors = (
   }
 
   if (error instanceof ZodError) {
-    return response.status(400).json(error.flatten().fieldErrors);
+    return response.status(400).json({
+      errors: error.errors.map(e => ({ path: e.path, message: e.message })),
+    });
   }
 
   if (error.message.includes("invalid input syntax for type uuid")) {
