@@ -1,8 +1,24 @@
 # epicloot
 Projeto de um site de games
 
-
 src/
+├── application/
+│   ├── controllers/
+│   │   ├── UserController.ts
+│   │   └── ProductController.ts
+│   ├── use-cases/
+│   │   ├── user/
+│   │   │   ├── CreateUserUseCase.ts
+│   │   │   ├── GetUserByIdUseCase.ts
+│   │   │   ├── UpdateUserUseCase.ts
+│   │   │   ├── DeleteUserUseCase.ts
+│   │   │   └── AuthenticateUserUseCase.ts
+│   │   └── product/
+│   │       ├── CreateProductUseCase.ts
+│   │       ├── GetProductByIdUseCase.ts
+│   │       ├── GetAllProductsUseCase.ts
+│   │       ├── UpdateProductUseCase.ts
+│   │       └── DeleteProductUseCase.ts
 ├── domain/
 │   ├── entities/
 │   │   ├── User.ts
@@ -15,68 +31,26 @@ src/
 │   │   └── Review.ts
 │   ├── repositories/
 │   │   ├── UserRepository.ts
-│   │   ├── ProductRepository.ts
-│   │   ├── OrderRepository.ts
-│   │   ├── CartRepository.ts
-│   │   ├── CartItemRepository.ts
-│   │   ├── PaymentRepository.ts
-│   │   ├── CategoryRepository.ts
-│   │   └── ReviewRepository.ts
-│   └── services/
-│       ├── UserService.ts
-│       ├── ProductService.ts
-│       ├── OrderService.ts
-│       ├── CartService.ts
-│       ├── PaymentService.ts
-│       ├── CategoryService.ts
-│       └── ReviewService.ts
+│   │   └── ProductRepository.ts
 ├── infrastructure/
 │   ├── database/
 │   │   ├── data-source.ts
 │   │   └── migrations/
-│   ├── orm/
-│   │   ├── UserORM.ts
-│   │   ├── ProductORM.ts
-│   │   ├── OrderORM.ts
-│   │   ├── CartORM.ts
-│   │   ├── CartItemORM.ts
-│   │   ├── PaymentORM.ts
-│   │   ├── CategoryORM.ts
-│   │   └── ReviewORM.ts
 │   └── repositories/
 │       ├── TypeORMUserRepository.ts
-│       ├── TypeORMProductRepository.ts
-│       ├── TypeORMOrderRepository.ts
-│       ├── TypeORMCartRepository.ts
-│       ├── TypeORMCartItemRepository.ts
-│       ├── TypeORMPaymentRepository.ts
-│       ├── TypeORMCategoryRepository.ts
-│       └── TypeORMReviewRepository.ts
-├── application/
-│   ├── dtos/
-│   ├── use-cases/
-│   │   ├── CreateUser.ts
-│   │   ├── CreateProduct.ts
-│   │   ├── CreateOrder.ts
-│   │   ├── AddToCart.ts
-│   │   ├── ProcessPayment.ts
-│   │   └── CreateReview.ts
-│   └── controllers/
-│       ├── UserController.ts
-│       ├── ProductController.ts
-│       ├── OrderController.ts
-│       ├── CartController.ts
-│       ├── PaymentController.ts
-│       └── ReviewController.ts
+│       └── TypeORMProductRepository.ts
 ├── interfaces/
 │   ├── http/
 │   │   ├── routes/
 │   │   │   ├── userRoutes.ts
+│   │   │   └── productRoutes.ts
 │   │   ├── middleware/
-│   │   │   └── errors.ts
-│   │   └── server.ts
+│   │   │   ├── errors.ts
+│   │   │   └── validateSchema.ts
+│   │   └── schemas/
+│   │       ├── userSchemas.ts
+│   │       └── productSchemas.ts
 └── main.ts
-
 
 npm run typeorm migration:generate ./src/infrastructure/database/migrations/AddColumnIsAdminForUserEntity -- -d ./src/infrastructure/database/data-source.ts
 npm run typeorm migration:run -- -d ./src/infrastructure/database/data-source.ts
