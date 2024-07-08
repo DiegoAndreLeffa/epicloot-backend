@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --ignore-watch node_modules --rs --cls src/server.ts",
+    "dev": "ts-node-dev --ignore-watch node_modules --rs --cls src/main.ts",
     "typeorm": "typeorm-ts-node-commonjs"
   },
   "keywords": [],
@@ -23,6 +23,7 @@
     "eslint": "^9.6.0",
     "globals": "^15.8.0",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.5.3"
   },
   "dependencies": {

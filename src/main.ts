@@ -1,4 +1,5 @@
 import "reflect-metadata";
+
 import { AppDataSource } from "./infrastructure/database/data-source";
 import app from "./interfaces/http/server";
 
