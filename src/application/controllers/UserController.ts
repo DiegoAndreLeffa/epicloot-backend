@@ -1,5 +1,5 @@
-// src/application/controllers/UserController.ts
 import { Request, Response, NextFunction } from "express";
+
 import { UserService } from "../../domain/services/UserService";
 import { AppError } from "../../interfaces/http/middleware/errors";
 
@@ -7,9 +7,9 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   async register(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const { name, email, password } = req.body;
+    const { name, email, password, isAdmin } = req.body;
     try {
-      const user = await this.userService.registerUser(name, email, password);
+      const user = await this.userService.registerUser(name, email, password, isAdmin);
       res.status(201).json(user);
     } catch (error: any) {
       next(new AppError(error.message));
