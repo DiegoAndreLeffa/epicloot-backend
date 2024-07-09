@@ -1,9 +1,7 @@
 import { Router } from "express";
 
-import { validateSchema } from "../middleware/validateSchema";
-import { createProductSchema, updateProductSchema } from "../schemas/productSchemas";
-
 import { ProductController } from "../../../application/controllers";
+
 import { 
     CreateProductUseCase, 
     GetProductByIdUseCase, 
@@ -15,6 +13,12 @@ import {
     TypeORMProductRepository, 
     TypeORMCategoryRepository 
 } from "../../../infrastructure/repositories";
+
+import { authenticate } from "../middleware/auth";
+import { checkAdmin } from "../middleware/checkAdmin";
+import { validateSchema } from "../middleware/validateSchema";
+import { createProductSchema, updateProductSchema } from "../schemas/productSchemas";
+
 
 const router = Router();
 
@@ -35,10 +39,10 @@ const productController = new ProductController(
   deleteProductUseCase
 );
 
-router.post("/products", validateSchema(createProductSchema), (req, res, next) => productController.create(req, res, next));
+router.post("/products", authenticate, checkAdmin, validateSchema(createProductSchema), (req, res, next) => productController.create(req, res, next));
 router.get("/products/:id", (req, res, next) => productController.getById(req, res, next));
 router.get("/products", (req, res, next) => productController.getAll(req, res, next));
-router.patch("/products/:id", validateSchema(updateProductSchema), (req, res, next) => productController.update(req, res, next));
-router.delete("/products/:id", (req, res, next) => productController.delete(req, res, next));
+router.patch("/products/:id", authenticate, checkAdmin, validateSchema(updateProductSchema), (req, res, next) => productController.update(req, res, next));
+router.delete("/products/:id", authenticate, checkAdmin, (req, res, next) => productController.delete(req, res, next));
 
 export default router;

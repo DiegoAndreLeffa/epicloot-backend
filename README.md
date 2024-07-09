@@ -35,10 +35,33 @@
   }
   ```
 
+#### Autenticar Usuário
+
+- **URL**: `/api/users/authenticate`
+- **Método**: `POST`
+- **Descrição**: Autentica um usuário e retorna um token JWT.
+- **Corpo da Requisição**:
+
+  ```json
+  {
+    "email": "john.doe@example.com",
+    "password": "password123"
+  }
+  ```
+
+- **Resposta de Sucesso**: `200 OK`
+
+  ```json
+  {
+    "token": "jwt-token"
+  }
+  ```
+
 #### Obter Usuário por ID
 
 - **URL**: `/api/users/:id`
 - **Método**: `GET`
+- **Middleware**: `authenticate`, `checkUser`
 - **Descrição**: Obtém um usuário pelo ID.
 - **Resposta de Sucesso**: `200 OK`
 
@@ -59,9 +82,10 @@
 
 - **URL**: `/api/users`
 - **Método**: `GET`
+- **Middleware**: `authenticate`, `checkAdmin`
 - **Descrição**: Obtém todos os usuários.
 - **Resposta de Sucesso**: `200 OK`
-  
+
   ```json
   [
     {
@@ -69,6 +93,16 @@
       "name": "John Doe",
       "email": "john.doe@example.com",
       "isAdmin": false,
+      "registeredAt": "2024-07-08T00:00:00.000Z",
+      "carts": [],
+      "payments": [],
+      "meusItens": []
+    },
+    {
+      "id": "uuid",
+      "name": "Jane Doe",
+      "email": "jane.doe@example.com",
+      "isAdmin": true,
       "registeredAt": "2024-07-08T00:00:00.000Z",
       "carts": [],
       "payments": [],
@@ -81,6 +115,7 @@
 
 - **URL**: `/api/users/:id`
 - **Método**: `PATCH`
+- **Middleware**: `authenticate`, `checkUser`
 - **Descrição**: Atualiza parcialmente um usuário.
 - **Corpo da Requisição**:
   
@@ -90,8 +125,9 @@
     "email": "john.updated@example.com"
   }
   ```
+
 - **Resposta de Sucesso**: `200 OK`
-  
+
   ```json
   {
     "id": "uuid",
@@ -109,18 +145,19 @@
 
 - **URL**: `/api/users/:id`
 - **Método**: `DELETE`
+- **Middleware**: `authenticate`, `checkUser`
 - **Descrição**: Deleta um usuário.
 - **Resposta de Sucesso**: `204 No Content`
 
-### Produtos
+#### Produtos
 
 #### Criar Produto
 
 - **URL**: `/api/products`
 - **Método**: `POST`
-- **Descrição**: Cria um novo produto.
+- **Middleware**: `authenticate`, `checkAdmin`
 - **Corpo da Requisição**:
-  
+
   ```json
   {
     "name": "Epic Game",
@@ -600,6 +637,7 @@ src/
 │       │   └── index.ts
 │       │
 │       ├── user/
+│       │   ├── AuthenticatedUseCase.ts
 │       │   ├── CreateUserUseCase.ts
 │       │   ├── GetUserByIdUseCase.ts
 │       │   ├── GetAllUsersUseCase.ts
@@ -643,6 +681,9 @@ src/
 │   │   ├── middleware/
 │   │   │   ├── errors.ts
 │   │   │   ├── validateSchema.ts
+│   │   │   ├── checkAdmin.ts
+│   │   │   ├── checkUser.ts
+│   │   │   ├── auth.ts
 │   │   ├── routes/
 │   │   │   ├── cartRoutes.ts
 │   │   │   ├── paymentRoutes.ts

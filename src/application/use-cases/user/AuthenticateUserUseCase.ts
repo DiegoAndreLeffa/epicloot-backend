@@ -1,22 +1,33 @@
-import { User } from "../../../domain/entities";
-import { UserRepository } from "../../../domain/repositories";
+import jwt from "jsonwebtoken";
+
+import { UserRepository } from "../../../domain/repositories/UserRepository";
 import { AppError } from "../../../interfaces/http/middleware/errors";
 
-interface AuthenticateUserRequest {
+interface AuthRequest {
   email: string;
   password: string;
 }
 
-export class AuthenticateUserUseCase {
+export class AuthenticatedUseCase {
   constructor(private userRepository: UserRepository) {}
 
-  async execute(request: AuthenticateUserRequest): Promise<User | null> {
+  async execute(request: AuthRequest): Promise<string> {
     const { email, password } = request;
 
     const user = await this.userRepository.findByEmail(email);
-    if (user && user.password === password) {
-      return user;
+    if (!user) {
+      throw new AppError("Invalid credentials", 401);
     }
-    throw new AppError("Invalid email or password", 401);
+
+    const isPasswordValid = user.password === password; // Simplified for example purposes
+    if (!isPasswordValid) {
+      throw new AppError("Invalid credentials", 401);
+    }
+
+    const token = jwt.sign({ id: user.id, isAdmin: user.isAdmin }, process.env.JWT_SECRET as string, {
+      expiresIn: "1h",
+    });
+
+    return token;
   }
 }
