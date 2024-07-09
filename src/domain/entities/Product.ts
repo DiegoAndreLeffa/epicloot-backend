@@ -7,8 +7,8 @@ import {
 } from "typeorm";
 
 import { Category } from "./Category";
-import { CartItem } from "./CartItem";
 import { Review } from "./Review";
+import { Cart } from "./Cart";
 
 @Entity("product")
 export class Product {
@@ -27,8 +27,8 @@ export class Product {
     @ManyToOne(() => Category, (category) => category.products, { cascade: true })
     category: Category;
 
-    @OneToMany(() => CartItem, (cartItem) => cartItem.product)
-    cartItems: CartItem[];
+    @OneToMany(() => Cart, (cart) => cart.items)
+    cart: Cart[];
 
     @OneToMany(() => Review, (review) => review.product)
     reviews: Review[];
