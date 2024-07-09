@@ -1,9 +1,11 @@
-// src/application/use-cases/product/CreateProductUseCase.ts
-import { Product } from "../../../domain/entities/Product";
-import { ProductRepository } from "../../../domain/repositories/ProductRepository";
-import { CategoryRepository } from "../../../domain/repositories/CategoryRepository";
-import { Category } from "../../../domain/entities/Category";
-import { AppError } from "../../../interfaces/http/middleware/errors";
+import { 
+  Product, 
+  Category 
+} from "../../../domain/entities";
+import { 
+  ProductRepository, 
+  CategoryRepository 
+} from "../../../domain/repositories";
 
 interface CreateProductRequest {
   name: string;

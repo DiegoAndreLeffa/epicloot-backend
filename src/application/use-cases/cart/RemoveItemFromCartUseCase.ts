@@ -1,4 +1,4 @@
-import { CartRepository } from "../../../domain/repositories/CartRepository";
+import { CartRepository } from "../../../domain/repositories";
 import { AppError } from "../../../interfaces/http/middleware/errors";
 
 interface RemoveItemFromCartRequest {

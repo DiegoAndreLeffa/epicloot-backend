@@ -1,5 +1,5 @@
-import { Cart } from "../../../domain/entities/Cart";
-import { CartRepository } from "../../../domain/repositories/CartRepository";
+import { Cart } from "../../../domain/entities";
+import { CartRepository } from "../../../domain/repositories";
 import { AppError } from "../../../interfaces/http/middleware/errors";
 
 export class GetCartByUserIdUseCase {

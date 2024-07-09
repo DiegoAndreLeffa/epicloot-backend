@@ -1,14 +1,22 @@
 import { Router } from "express";
-import { CartController } from "../../../application/controllers/CartController";
-import { TypeORMCartRepository } from "../../../infrastructure/repositories/TypeORMCartRepository";
-import { TypeORMUserRepository } from "../../../infrastructure/repositories/TypeORMUserRepository";
-import { TypeORMProductRepository } from "../../../infrastructure/repositories/TypeORMProductRepository";
-import { CreateOrUpdateCartUseCase } from "../../../application/use-cases/cart/CreateOrUpdateCartUseCase";
-import { GetCartByUserIdUseCase } from "../../../application/use-cases/cart/GetCartByUserIdUseCase";
-import { RemoveItemFromCartUseCase } from "../../../application/use-cases/cart/RemoveItemFromCartUseCase";
-import { validateSchema } from "../middleware/validateSchema";
-import { createOrUpdateCartSchema, removeItemFromCartSchema } from "../schemas/cartSchemas";
 
+import { validateSchema } from "../middleware/validateSchema";
+import { 
+  createOrUpdateCartSchema, 
+  removeItemFromCartSchema 
+} from "../schemas/cartSchemas";
+
+import { CartController } from "../../../application/controllers";
+import { 
+  CreateOrUpdateCartUseCase, 
+  GetCartByUserIdUseCase, 
+  RemoveItemFromCartUseCase 
+} from "../../../application/use-cases/cart";
+import { 
+  TypeORMCartRepository, 
+  TypeORMUserRepository, 
+  TypeORMProductRepository 
+} from "../../../infrastructure/repositories";
 
 const router = Router();
 

@@ -1,6 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable } from "typeorm";
-import { User } from "./User";
+import { 
+  Entity, 
+  PrimaryGeneratedColumn, 
+  ManyToOne, 
+  ManyToMany, 
+  JoinTable, 
+  Column 
+} from "typeorm";
+
 import { Product } from "./Product";
+import { User } from "./User";
 
 @Entity()
 export class Cart {

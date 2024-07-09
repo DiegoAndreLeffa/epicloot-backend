@@ -1,20 +1,23 @@
 import { Repository } from "typeorm";
 
-import { User } from "../../domain/entities/User";
-import { UserRepository } from "../../domain/repositories/UserRepository";
+import { User } from "../../domain/entities";
+import { UserRepository } from "../../domain/repositories";
+
 import { AppDataSource } from "../database/data-source";
 
 export class TypeORMUserRepository implements UserRepository {
   private ormRepository: Repository<User> = AppDataSource.getRepository(User);
 
   async findById(id: string): Promise<User | null> {
-    const user = await this.ormRepository.findOne({ where: { id }});
-    return user || null;
+    return await this.ormRepository.findOne({ where: { id }, relations: ["carts", "payments", "myGames"] });
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const user = await this.ormRepository.findOne({ where: { email } });
-    return user || null;
+    return await this.ormRepository.findOne({ where: { email }, relations: ["carts", "payments", "myGames"] });
+  }
+
+  async findAll(): Promise<User[]> {
+    return this.ormRepository.find({ relations: ["carts", "payments", "myGames"] });
   }
 
   async save(user: User): Promise<void> {

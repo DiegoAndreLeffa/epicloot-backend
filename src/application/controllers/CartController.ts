@@ -1,7 +1,10 @@
 import { Request, Response, NextFunction } from "express";
-import { CreateOrUpdateCartUseCase } from "../use-cases/cart/CreateOrUpdateCartUseCase";
-import { GetCartByUserIdUseCase } from "../use-cases/cart/GetCartByUserIdUseCase";
-import { RemoveItemFromCartUseCase } from "../use-cases/cart/RemoveItemFromCartUseCase";
+
+import { 
+  CreateOrUpdateCartUseCase, 
+  GetCartByUserIdUseCase, 
+  RemoveItemFromCartUseCase 
+} from "../use-cases/cart";
 
 export class CartController {
   constructor(

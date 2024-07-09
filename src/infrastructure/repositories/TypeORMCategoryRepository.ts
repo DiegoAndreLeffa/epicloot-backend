@@ -1,6 +1,8 @@
 import { Repository } from "typeorm";
-import { Category } from "../../domain/entities/Category";
-import { CategoryRepository } from "../../domain/repositories/CategoryRepository";
+
+import { Category } from "../../domain/entities";
+import { CategoryRepository } from "../../domain/repositories";
+
 import { AppDataSource } from "../database/data-source";
 
 export class TypeORMCategoryRepository implements CategoryRepository {

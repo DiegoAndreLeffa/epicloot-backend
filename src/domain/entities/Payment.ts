@@ -1,26 +1,33 @@
 import { 
-    Entity, 
-    PrimaryGeneratedColumn, 
-    Column, 
-    OneToOne 
+  Entity, 
+  PrimaryGeneratedColumn, 
+  Column, 
+  ManyToOne, 
+  ManyToMany, 
+  JoinTable 
 } from "typeorm";
 
-import { Order } from "./Order";
+import { User } from "./User";
+import { Product } from "./Product";
 
-@Entity("payment")
+@Entity()
 export class Payment {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @OneToOne(() => Order, (order) => order.payment)
-    order: Order;
+  @ManyToOne(() => User, (user) => user.payments)
+  user: User;
 
-    @Column({ type: "varchar" })
-    type: string;
+  @ManyToMany(() => Product)
+  @JoinTable()
+  items: Product[];
 
-    @Column({ type: "timestamp" })
-    date: Date;
+  @Column({ type: "varchar" })
+  type: string;
 
-    @Column({ type: "decimal" })
-    amount: number;
+  @Column({ type: "timestamp" })
+  date: Date;
+
+  @Column({ type: "decimal" })
+  amount: number;
 }

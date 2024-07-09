@@ -1,14 +1,20 @@
 import { Router } from "express";
-import { ProductController } from "../../../application/controllers/ProductController";
-import { TypeORMProductRepository } from "../../../infrastructure/repositories/TypeORMProductRepository";
-import { TypeORMCategoryRepository } from "../../../infrastructure/repositories/TypeORMCategoryRepository";
-import { CreateProductUseCase } from "../../../application/use-cases/product/CreateProductUseCase";
-import { GetProductByIdUseCase } from "../../../application/use-cases/product/GetProductByIdUseCase";
-import { GetAllProductsUseCase } from "../../../application/use-cases/product/GetAllProductsUseCase";
-import { UpdateProductUseCase } from "../../../application/use-cases/product/UpdateProductUseCase";
-import { DeleteProductUseCase } from "../../../application/use-cases/product/DeleteProductUseCase";
+
 import { validateSchema } from "../middleware/validateSchema";
 import { createProductSchema, updateProductSchema } from "../schemas/productSchemas";
+
+import { ProductController } from "../../../application/controllers";
+import { 
+    CreateProductUseCase, 
+    GetProductByIdUseCase, 
+    GetAllProductsUseCase, 
+    UpdateProductUseCase, 
+    DeleteProductUseCase 
+} from "../../../application/use-cases/product";
+import { 
+    TypeORMProductRepository, 
+    TypeORMCategoryRepository 
+} from "../../../infrastructure/repositories";
 
 const router = Router();
 

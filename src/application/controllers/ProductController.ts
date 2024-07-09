@@ -1,10 +1,12 @@
-// src/application/controllers/ProductController.ts
 import { Request, Response, NextFunction } from "express";
-import { CreateProductUseCase } from "../use-cases/product/CreateProductUseCase";
-import { GetProductByIdUseCase } from "../use-cases/product/GetProductByIdUseCase";
-import { GetAllProductsUseCase } from "../use-cases/product/GetAllProductsUseCase";
-import { UpdateProductUseCase } from "../use-cases/product/UpdateProductUseCase";
-import { DeleteProductUseCase } from "../use-cases/product/DeleteProductUseCase";
+
+import { 
+  CreateProductUseCase, 
+  GetProductByIdUseCase, 
+  GetAllProductsUseCase, 
+  UpdateProductUseCase, 
+  DeleteProductUseCase 
+} from "../use-cases/product";
 
 export class ProductController {
   constructor(

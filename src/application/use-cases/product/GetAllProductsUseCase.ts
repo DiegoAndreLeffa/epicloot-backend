@@ -1,5 +1,5 @@
-import { Product } from "../../../domain/entities/Product";
-import { ProductRepository } from "../../../domain/repositories/ProductRepository";
+import { Product } from "../../../domain/entities";
+import { ProductRepository } from "../../../domain/repositories";
 
 export class GetAllProductsUseCase {
   constructor(private productRepository: ProductRepository) {}

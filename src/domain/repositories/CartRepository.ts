@@ -1,4 +1,4 @@
-import { Cart } from "../entities/Cart";
+import { Cart } from "../entities";
 
 export interface CartRepository {
   findById(id: string): Promise<Cart | null>;

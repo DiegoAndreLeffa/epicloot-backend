@@ -1,5 +1,5 @@
-import { Product } from "../../../domain/entities/Product";
-import { ProductRepository } from "../../../domain/repositories/ProductRepository";
+import { Product } from "../../../domain/entities";
+import { ProductRepository } from "../../../domain/repositories";
 import { AppError } from "../../../interfaces/http/middleware/errors";
 
 interface UpdateProductRequest {

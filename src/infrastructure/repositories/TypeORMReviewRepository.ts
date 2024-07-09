@@ -1,6 +1,8 @@
 import { Repository } from "typeorm";
-import { Review } from "../../domain/entities/Review";
-import { ReviewRepository } from "../../domain/repositories/ReviewRepository";
+
+import { Review } from "../../domain/entities";
+import { ReviewRepository } from "../../domain/repositories";
+
 import { AppDataSource } from "../database/data-source";
 
 export class TypeORMReviewRepository implements ReviewRepository {

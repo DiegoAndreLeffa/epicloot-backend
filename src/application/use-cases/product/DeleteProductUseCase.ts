@@ -1,4 +1,4 @@
-import { ProductRepository } from "../../../domain/repositories/ProductRepository";
+import { ProductRepository } from "../../../domain/repositories";
 import { AppError } from "../../../interfaces/http/middleware/errors";
 
 export class DeleteProductUseCase {

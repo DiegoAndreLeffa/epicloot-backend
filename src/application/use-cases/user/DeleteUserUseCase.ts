@@ -1,4 +1,4 @@
-import { UserRepository } from "../../../domain/repositories/UserRepository";
+import { UserRepository } from "../../../domain/repositories";
 import { AppError } from "../../../interfaces/http/middleware/errors";
 
 export class DeleteUserUseCase {

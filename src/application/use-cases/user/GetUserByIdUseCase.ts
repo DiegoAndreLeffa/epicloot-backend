@@ -1,5 +1,5 @@
-import { User } from "../../../domain/entities/User";
-import { UserRepository } from "../../../domain/repositories/UserRepository";
+import { User } from "../../../domain/entities";
+import { UserRepository } from "../../../domain/repositories";
 import { AppError } from "../../../interfaces/http/middleware/errors";
 
 export class GetUserByIdUseCase {

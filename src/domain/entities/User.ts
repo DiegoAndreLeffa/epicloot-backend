@@ -4,13 +4,16 @@ import {
   Column, 
   OneToMany, 
   BeforeInsert, 
-  BeforeUpdate 
+  BeforeUpdate, 
+  ManyToMany,
+  JoinTable
 } from "typeorm";
 import { hashSync } from "bcryptjs";
 
-import { Order } from "./Order";
 import { Cart } from "./Cart";
 import { Review } from "./Review";
+import { Payment } from "./Payment";
+import { Product } from "./Product";
 
 @Entity("user")
 export class User {
@@ -32,8 +35,12 @@ export class User {
     @Column({ type: "timestamp" })
     registrationDate: Date;
 
-    @OneToMany(() => Order, (order) => order.user)
-    orders: Order[];
+    @ManyToMany(() => Product)
+    @JoinTable()
+    myGames: Product[];
+
+    @OneToMany(() => Payment, (payment) => payment.user)
+    payments: Payment[];
 
     @OneToMany(() => Cart, (cart) => cart.user)
     carts: Cart[];

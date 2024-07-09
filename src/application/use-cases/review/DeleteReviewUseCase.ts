@@ -1,4 +1,4 @@
-import { ReviewRepository } from "../../../domain/repositories/ReviewRepository";
+import { ReviewRepository } from "../../../domain/repositories";
 import { AppError } from "../../../interfaces/http/middleware/errors";
 
 export class DeleteReviewUseCase {

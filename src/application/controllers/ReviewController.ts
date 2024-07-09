@@ -1,9 +1,12 @@
 import { Request, Response, NextFunction } from "express";
-import { CreateReviewUseCase } from "../use-cases/review/CreateReviewUseCase";
-import { GetReviewByIdUseCase } from "../use-cases/review/GetReviewByIdUseCase";
-import { GetAllReviewsUseCase } from "../use-cases/review/GetAllReviewsUseCase";
-import { UpdateReviewUseCase } from "../use-cases/review/UpdateReviewUseCase";
-import { DeleteReviewUseCase } from "../use-cases/review/DeleteReviewUseCase";
+
+import { 
+  CreateReviewUseCase, 
+  GetReviewByIdUseCase, 
+  GetAllReviewsUseCase, 
+  UpdateReviewUseCase, 
+  DeleteReviewUseCase 
+} from "../use-cases/review";
 
 export class ReviewController {
   constructor(

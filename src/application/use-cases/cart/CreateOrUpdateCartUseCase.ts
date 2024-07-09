@@ -1,8 +1,9 @@
-// src/application/use-cases/cart/CreateOrUpdateCartUseCase.ts
-import { Cart } from "../../../domain/entities/Cart";
-import { CartRepository } from "../../../domain/repositories/CartRepository";
-import { UserRepository } from "../../../domain/repositories/UserRepository";
-import { ProductRepository } from "../../../domain/repositories/ProductRepository";
+import { Cart } from "../../../domain/entities";
+import { 
+  CartRepository, 
+  UserRepository, 
+  ProductRepository 
+} from "../../../domain/repositories";
 import { AppError } from "../../../interfaces/http/middleware/errors";
 
 interface CreateOrUpdateCartRequest {

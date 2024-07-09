@@ -1,5 +1,5 @@
-import { Review } from "../../../domain/entities/Review";
-import { ReviewRepository } from "../../../domain/repositories/ReviewRepository";
+import { Review } from "../../../domain/entities";
+import { ReviewRepository } from "../../../domain/repositories";
 import { AppError } from "../../../interfaces/http/middleware/errors";
 
 interface UpdateReviewRequest {

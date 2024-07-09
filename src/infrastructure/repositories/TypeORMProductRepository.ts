@@ -1,7 +1,8 @@
 import { Repository } from "typeorm";
 
-import { Product } from "../../domain/entities/Product";
-import { ProductRepository } from "../../domain/repositories/ProductRepository";
+import { Product } from "../../domain/entities";
+import { ProductRepository } from "../../domain/repositories";
+
 import { AppDataSource } from "../database/data-source";
 
 export class TypeORMProductRepository implements ProductRepository {

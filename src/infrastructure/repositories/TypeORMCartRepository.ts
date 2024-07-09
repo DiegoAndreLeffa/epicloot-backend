@@ -1,7 +1,10 @@
 import { Repository } from "typeorm";
-import { Cart } from "../../domain/entities/Cart";
-import { CartRepository } from "../../domain/repositories/CartRepository";
+
+import { Cart } from "../../domain/entities";
+import { CartRepository } from "../../domain/repositories";
+
 import { AppDataSource } from "../database/data-source";
+
 
 export class TypeORMCartRepository implements CartRepository {
   private ormRepository: Repository<Cart> = AppDataSource.getRepository(Cart);

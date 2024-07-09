@@ -1,16 +1,21 @@
 import { Router } from "express";
-import { ReviewController } from "../../../application/controllers/ReviewController";
-import { TypeORMReviewRepository } from "../../../infrastructure/repositories/TypeORMReviewRepository";
-import { TypeORMUserRepository } from "../../../infrastructure/repositories/TypeORMUserRepository";
-import { TypeORMProductRepository } from "../../../infrastructure/repositories/TypeORMProductRepository";
-import { CreateReviewUseCase } from "../../../application/use-cases/review/CreateReviewUseCase";
-import { GetReviewByIdUseCase } from "../../../application/use-cases/review/GetReviewByIdUseCase";
-import { GetAllReviewsUseCase } from "../../../application/use-cases/review/GetAllReviewsUseCase";
-import { UpdateReviewUseCase } from "../../../application/use-cases/review/UpdateReviewUseCase";
-import { DeleteReviewUseCase } from "../../../application/use-cases/review/DeleteReviewUseCase";
+
 import { validateSchema } from "../middleware/validateSchema";
 import { createReviewSchema, updateReviewSchema } from "../schemas/reviewSchemas";
 
+import { ReviewController } from "../../../application/controllers";
+import { 
+  CreateReviewUseCase, 
+  GetReviewByIdUseCase, 
+  GetAllReviewsUseCase, 
+  UpdateReviewUseCase, 
+  DeleteReviewUseCase 
+} from "../../../application/use-cases/review";
+import { 
+  TypeORMReviewRepository, 
+  TypeORMUserRepository, 
+  TypeORMProductRepository 
+} from "../../../infrastructure/repositories";
 
 const router = Router();
 

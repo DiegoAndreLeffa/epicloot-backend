@@ -2,55 +2,105 @@
 Projeto de um site de games
 
 src/
+│
 ├── application/
 │   ├── controllers/
+│   │   ├── CartController.ts
+│   │   ├── PaymentController.ts
+│   │   ├── ProductController.ts
+│   │   ├── ReviewController.ts
 │   │   ├── UserController.ts
-│   │   └── ProductController.ts
+│   │   └── index.ts
+│   │
 │   ├── use-cases/
-│   │   ├── user/
-│   │   │   ├── CreateUserUseCase.ts
-│   │   │   ├── GetUserByIdUseCase.ts
-│   │   │   ├── UpdateUserUseCase.ts
-│   │   │   ├── DeleteUserUseCase.ts
-│   │   │   └── AuthenticateUserUseCase.ts
-│   │   └── product/
-│   │       ├── CreateProductUseCase.ts
-│   │       ├── GetProductByIdUseCase.ts
-│   │       ├── GetAllProductsUseCase.ts
-│   │       ├── UpdateProductUseCase.ts
-│   │       └── DeleteProductUseCase.ts
+│       ├── cart/
+│       │   ├── CreateOrUpdateCartUseCase.ts
+│       │   ├── GetCartByUserIdUseCase.ts
+│       │   ├── RemoveItemFromCartUseCase.ts
+│       │   └── index.ts
+│       │
+│       ├── payment/
+│       │   ├── CreatePaymentUseCase.ts
+│       │   ├── GetPaymentByIdUseCase.ts
+│       │   ├── GetAllPaymentsUseCase.ts
+│       │   ├── DeletePaymentUseCase.ts
+│       │   └── index.ts
+│       │
+│       ├── product/
+│       │   ├── CreateProductUseCase.ts
+│       │   ├── GetProductByIdUseCase.ts
+│       │   ├── GetAllProductsUseCase.ts
+│       │   ├── UpdateProductUseCase.ts
+│       │   ├── DeleteProductUseCase.ts
+│       │   └── index.ts
+│       │
+│       ├── review/
+│       │   ├── CreateReviewUseCase.ts
+│       │   ├── GetReviewByIdUseCase.ts
+│       │   ├── GetAllReviewsUseCase.ts
+│       │   ├── UpdateReviewUseCase.ts
+│       │   ├── DeleteReviewUseCase.ts
+│       │   └── index.ts
+│       │
+│       ├── user/
+│       │   ├── CreateUserUseCase.ts
+│       │   ├── GetUserByIdUseCase.ts
+│       │   ├── GetAllUsersUseCase.ts
+│       │   ├── UpdateUserUseCase.ts
+│       │   ├── DeleteUserUseCase.ts
+│       │   └── index.ts
+│
 ├── domain/
 │   ├── entities/
-│   │   ├── User.ts
-│   │   ├── Product.ts
-│   │   ├── Order.ts
 │   │   ├── Cart.ts
-│   │   ├── CartItem.ts
 │   │   ├── Payment.ts
-│   │   ├── Category.ts
-│   │   └── Review.ts
+│   │   ├── Product.ts
+│   │   ├── Review.ts
+│   │   ├── User.ts
+│   │   └── index.ts
+│   │
 │   ├── repositories/
-│   │   ├── UserRepository.ts
-│   │   └── ProductRepository.ts
+│       ├── CartRepository.ts
+│       ├── PaymentRepository.ts
+│       ├── ProductRepository.ts
+│       ├── ReviewRepository.ts
+│       ├── UserRepository.ts
+│       └── index.ts
+│
 ├── infrastructure/
 │   ├── database/
 │   │   ├── data-source.ts
 │   │   └── migrations/
-│   └── repositories/
+│   │       ├── ...
+│   │
+│   ├── repositories/
+│       ├── TypeORMCartRepository.ts
+│       ├── TypeORMPaymentRepository.ts
+│       ├── TypeORMProductRepository.ts
+│       ├── TypeORMReviewRepository.ts
 │       ├── TypeORMUserRepository.ts
-│       └── TypeORMProductRepository.ts
+│       └── index.ts
+│
 ├── interfaces/
 │   ├── http/
-│   │   ├── routes/
-│   │   │   ├── userRoutes.ts
-│   │   │   └── productRoutes.ts
 │   │   ├── middleware/
 │   │   │   ├── errors.ts
-│   │   │   └── validateSchema.ts
-│   │   └── schemas/
-│   │       ├── userSchemas.ts
-│   │       └── productSchemas.ts
-└── main.ts
+│   │   │   ├── validateSchema.ts
+│   │   ├── routes/
+│   │   │   ├── cartRoutes.ts
+│   │   │   ├── paymentRoutes.ts
+│   │   │   ├── productRoutes.ts
+│   │   │   ├── reviewRoutes.ts
+│   │   │   ├── userRoutes.ts
+│   │   ├── schemas/
+│   │   │   ├── cartSchemas.ts
+│   │   │   ├── paymentSchemas.ts
+│   │   │   ├── productSchemas.ts
+│   │   │   ├── reviewSchemas.ts
+│   │   │   ├── userSchemas.ts
+│   │   ├── server.ts
+│
+├── main.ts
 
 npm run typeorm migration:generate ./src/infrastructure/database/migrations/AddColumnIsAdminForUserEntity -- -d ./src/infrastructure/database/data-source.ts
 npm run typeorm migration:run -- -d ./src/infrastructure/database/data-source.ts

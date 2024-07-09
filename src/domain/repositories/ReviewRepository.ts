@@ -1,5 +1,4 @@
-// src/domain/repositories/ReviewRepository.ts
-import { Review } from "../entities/Review";
+import { Review } from "../entities";
 
 export interface ReviewRepository {
   findById(id: string): Promise<Review | null>;
