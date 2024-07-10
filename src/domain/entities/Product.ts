@@ -24,6 +24,12 @@ export class Product {
     @Column({ type: "decimal" })
     price: number;
 
+    @Column({ nullable: false })
+    coverImage: string;
+
+    @Column('simple-array', { nullable: false })
+    galleryImages: string[];
+
     @ManyToOne(() => Category, (category) => category.products, { cascade: true })
     category: Category;
 
