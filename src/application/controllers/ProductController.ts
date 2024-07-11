@@ -17,13 +17,13 @@ export class ProductController {
   ) {}
 
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const { name, description, price, categoryName } = req.body;
+    const { name, description, price, categoryName, link} = req.body;
     const multerReq = req as MulterRequest;
     const coverImage = multerReq.files && multerReq.files['coverImage'] ? multerReq.files['coverImage'][0].path : null;
     const galleryImages = multerReq.files && multerReq.files['galleryImages'] ? multerReq.files['galleryImages'].map(file => file.path) : [];
 
     try {
-      const product = await this.createProductUseCase.execute({ name, description, price, categoryName, coverImage, galleryImages });
+      const product = await this.createProductUseCase.execute({ name, description, price, categoryName, coverImage, galleryImages, link});
       res.status(201).json(product);
     } catch (error: any) {
       next(error);

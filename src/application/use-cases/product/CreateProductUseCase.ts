@@ -1,7 +1,6 @@
 import { Product } from '../../../domain/entities/Product';
 import { ProductRepository } from '../../../domain/repositories/ProductRepository';
 import { CategoryRepository } from '../../../domain/repositories/CategoryRepository';
-import { AppError } from '../../../interfaces/http/middleware/errors';
 
 interface CreateProductRequest {
   name: string;
@@ -10,6 +9,7 @@ interface CreateProductRequest {
   categoryName: string;
   coverImage?: string | null;
   galleryImages?: string[];
+  link?: string; // Novo campo link
 }
 
 export class CreateProductUseCase {
@@ -19,16 +19,12 @@ export class CreateProductUseCase {
   ) {}
 
   async execute(request: CreateProductRequest): Promise<Product> {
-    const { name, description, price, categoryName, coverImage, galleryImages } = request;
+    const { name, description, price, categoryName, coverImage, galleryImages, link } = request;
 
     let category = await this.categoryRepository.findByName(categoryName);
     if (!category) {
       category = this.categoryRepository.create({ name: categoryName });
       await this.categoryRepository.save(category);
-    }
-
-    if (!category) {
-      throw new AppError('Category could not be created or found', 400);
     }
 
     const product = new Product();
@@ -38,6 +34,7 @@ export class CreateProductUseCase {
     product.category = category;
     product.coverImage = coverImage || '';
     product.galleryImages = galleryImages || [];
+    product.link = link || '';
 
     await this.productRepository.save(product);
 

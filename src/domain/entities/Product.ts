@@ -24,11 +24,14 @@ export class Product {
     @Column({ type: "decimal" })
     price: number;
 
-    @Column({ nullable: false })
+    @Column({ type: "varchar" })
     coverImage: string;
 
-    @Column('simple-array', { nullable: false })
+    @Column('simple-array')
     galleryImages: string[];
+
+    @Column({ nullable: true })
+    link: string;
 
     @ManyToOne(() => Category, (category) => category.products, { cascade: true })
     category: Category;
