@@ -33,7 +33,7 @@ export class UserController {
     const { email, password } = req.body;
     try {
       const token = await this.authenticatedUseCase.execute({ email, password });
-      res.status(200).json({ token });
+      res.status(200).json(token);
     } catch (error: any) {
       next(error);
     }

@@ -18,7 +18,7 @@ export class Cart {
   @ManyToOne(() => User, (user) => user.carts)
   user: User;
 
-  @ManyToMany(() => Product)
+  @ManyToMany(() => Product, (product) => product.carts)
   @JoinTable()
   items: Product[];
 

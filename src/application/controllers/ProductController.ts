@@ -1,12 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { CreateProductUseCase, GetProductByIdUseCase, GetAllProductsUseCase, UpdateProductUseCase, DeleteProductUseCase } from "../use-cases/product";
 
-interface MulterRequest extends Request {
-  files: {
-    [fieldname: string]: Express.Multer.File[];
-  };
-}
-
 export class ProductController {
   constructor(
     private createProductUseCase: CreateProductUseCase,
@@ -17,14 +11,24 @@ export class ProductController {
   ) {}
 
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const { name, description, price, categoryName, link} = req.body;
-    const multerReq = req as MulterRequest;
-    const coverImage = multerReq.files && multerReq.files['coverImage'] ? multerReq.files['coverImage'][0].path : null;
-    const galleryImages = multerReq.files && multerReq.files['galleryImages'] ? multerReq.files['galleryImages'].map(file => file.path) : [];
+    const { name, description, price, categoryNames, link } = req.body;
+
+    let coverImage: string | null = null;
+    let galleryImages: string[] = [];
+
+    if (req.files && !Array.isArray(req.files)) {
+      if (req.files['coverImage']) {
+        coverImage = (req.files['coverImage'][0] as Express.Multer.File).path;
+      }
+      if (req.files['galleryImages']) {
+        galleryImages = (req.files['galleryImages'] as Express.Multer.File[]).map(file => file.path);
+      }
+    }
 
     try {
-      const product = await this.createProductUseCase.execute({ name, description, price, categoryName, coverImage, galleryImages, link});
-      res.status(201).json(product);
+      const product = await this.createProductUseCase.execute({ name, description, price, categoryNames, coverImage, galleryImages, link });
+      const productWithCategories = await this.getProductByIdUseCase.execute(product.id);
+      res.status(201).json(productWithCategories);
     } catch (error: any) {
       next(error);
     }
@@ -51,21 +55,33 @@ export class ProductController {
 
   async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     const id = req.params.id;
-    const updateData = req.body;
-    const multerReq = req as MulterRequest;
-    const coverImage = multerReq.files && multerReq.files['coverImage'] ? multerReq.files['coverImage'][0].path : null;
-    const galleryImages = multerReq.files && multerReq.files['galleryImages'] ? multerReq.files['galleryImages'].map(file => file.path) : [];
+    const { name, description, price, categoryNames, link } = req.body;
 
-    if (coverImage) {
-      updateData.coverImage = coverImage;
+    let coverImage: string | null = null;
+    let galleryImages: string[] = [];
+
+    if (req.files && !Array.isArray(req.files)) {
+      if (req.files['coverImage']) {
+        coverImage = (req.files['coverImage'][0] as Express.Multer.File).path;
+      }
+      if (req.files['galleryImages']) {
+        galleryImages = (req.files['galleryImages'] as Express.Multer.File[]).map(file => file.path);
+      }
     }
-    if (galleryImages.length > 0) {
-      updateData.galleryImages = galleryImages;
-    }
+
+    const updateData: any = {};
+    if (name) updateData.name = name;
+    if (description) updateData.description = description;
+    if (price !== undefined) updateData.price = price;
+    if (categoryNames) updateData.categoryNames = categoryNames;
+    if (coverImage) updateData.coverImage = coverImage;
+    if (galleryImages.length > 0) updateData.galleryImages = galleryImages;
+    if (link) updateData.link = link;
 
     try {
-      const product = await this.updateProductUseCase.execute({ id, ...updateData });
-      res.status(200).json(product);
+      const updatedProduct = await this.updateProductUseCase.execute({ id, ...updateData });
+      const productWithCategories = await this.getProductByIdUseCase.execute(updatedProduct.id);
+      res.status(200).json(productWithCategories);
     } catch (error: any) {
       next(error);
     }
@@ -74,7 +90,7 @@ export class ProductController {
   async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
     const id = req.params.id;
     try {
-      await this.deleteProductUseCase.execute({ id });
+      await this.deleteProductUseCase.execute({id});
       res.status(204).send();
     } catch (error: any) {
       next(error);

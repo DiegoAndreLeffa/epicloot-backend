@@ -10,15 +10,23 @@ export class TypeORMCartRepository implements CartRepository {
   private ormRepository: Repository<Cart> = AppDataSource.getRepository(Cart);
 
   async findById(id: string): Promise<Cart | null> {
-    return await this.ormRepository.findOne({ where: { id }, relations: ["items"] });
+    return await this.ormRepository.findOne({ 
+      where: { id }, 
+      relations: ["items", "items.categories", "user"] 
+    });
   }
 
   async findByUserId(userId: string): Promise<Cart | null> {
-    return await this.ormRepository.findOne({ where: { user: { id: userId } }, relations: ["items"] });
+    return await this.ormRepository.findOne({ 
+      where: { user: { id: userId } }, 
+      relations: ["items", "items.categories", "user"] 
+    });
   }
 
   async findAll(): Promise<Cart[]> {
-    return this.ormRepository.find({ relations: ["items"] });
+    return this.ormRepository.find({ 
+      relations: ["items", "items.categories", "user"] 
+    });
   }
 
   async save(cart: Cart): Promise<void> {

@@ -16,7 +16,6 @@ export class DeleteProductUseCase {
       throw new AppError('Product not found', 404);
     }
 
-    // Deletar imagens do Cloudinary
     if (product.coverImage) {
       await cloudinary.uploader.destroy(product.coverImage);
     }

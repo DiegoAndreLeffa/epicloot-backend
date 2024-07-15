@@ -3,7 +3,9 @@ import {
     PrimaryGeneratedColumn, 
     Column, 
     ManyToOne, 
-    OneToMany 
+    OneToMany, 
+    ManyToMany,
+    JoinTable
 } from "typeorm";
 
 import { Category } from "./Category";
@@ -33,11 +35,12 @@ export class Product {
     @Column({ nullable: true })
     link: string;
 
-    @ManyToOne(() => Category, (category) => category.products, { cascade: true })
-    category: Category;
+    @ManyToMany(() => Category, (category) => category.products, { cascade: true })
+    @JoinTable()
+    categories: Category[];
 
     @OneToMany(() => Cart, (cart) => cart.items)
-    cart: Cart[];
+    carts: Cart[];
 
     @OneToMany(() => Review, (review) => review.product)
     reviews: Review[];

@@ -16,7 +16,7 @@ const categoryRepository = new TypeORMCategoryRepository();
 const createProductUseCase = new CreateProductUseCase(productRepository, categoryRepository);
 const getProductByIdUseCase = new GetProductByIdUseCase(productRepository);
 const getAllProductsUseCase = new GetAllProductsUseCase(productRepository);
-const updateProductUseCase = new UpdateProductUseCase(productRepository);
+const updateProductUseCase = new UpdateProductUseCase(productRepository, categoryRepository);
 const deleteProductUseCase = new DeleteProductUseCase(productRepository);
 
 const productController = new ProductController(
@@ -38,7 +38,7 @@ router.post(
 router.get('/products/:id', (req, res, next) => productController.getById(req, res, next));
 router.get('/products', (req, res, next) => productController.getAll(req, res, next));
 router.patch(
-  '/products/:id',
+  '/update/:id',
   authenticate,
   checkAdmin,
   upload.fields([{ name: 'coverImage', maxCount: 1 }, { name: 'galleryImages', maxCount: 5 }]),

@@ -5,7 +5,6 @@ export const createOrUpdateCartSchema = z.object({
   productIds: z.array(z.string().uuid("Invalid product ID"))
 });
 
-export const removeItemFromCartSchema = z.object({
-  userId: z.string().uuid("Invalid user ID"),
-  productId: z.string().uuid("Invalid product ID"),
+export const removeCartItemSchema = z.object({
+  productId: z.string().uuid("Invalid product ID format"),
 });

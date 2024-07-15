@@ -2,19 +2,19 @@ import {
   Entity, 
   PrimaryGeneratedColumn, 
   Column, 
-  OneToMany 
+  ManyToMany 
 } from "typeorm";
 
 import { Product } from "./Product";
 
-@Entity()
+@Entity("category")
 export class Category {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: "varchar", unique: true })
+  @Column({ type: "varchar" })
   name: string;
 
-  @OneToMany(() => Product, (product) => product.category)
+  @ManyToMany(() => Product, (product) => product.categories)
   products: Product[];
 }

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-
 import { UserRepository } from "../../../domain/repositories/UserRepository";
 import { AppError } from "../../../interfaces/http/middleware/errors";
+import { compare } from "bcryptjs";
 
 interface AuthRequest {
   email: string;
@@ -11,23 +11,32 @@ interface AuthRequest {
 export class AuthenticatedUseCase {
   constructor(private userRepository: UserRepository) {}
 
-  async execute(request: AuthRequest): Promise<string> {
+  async execute(request: AuthRequest): Promise<{}> {
     const { email, password } = request;
 
     const user = await this.userRepository.findByEmail(email);
+
     if (!user) {
       throw new AppError("Invalid credentials", 401);
     }
 
-    const isPasswordValid = user.password === password; // Simplified for example purposes
+    const isPasswordValid: boolean = await compare(password, user.password);
     if (!isPasswordValid) {
       throw new AppError("Invalid credentials", 401);
     }
 
-    const token = jwt.sign({ id: user.id, isAdmin: user.isAdmin }, process.env.JWT_SECRET as string, {
-      expiresIn: "1h",
-    });
+    if (!process.env.SECRET_KEY) {
+      throw new AppError("JWT secret is not defined", 500);
+    }
 
-    return token;
+    const token = jwt.sign(
+      { id: user.id, isAdmin: user.isAdmin },
+      process.env.SECRET_KEY,
+      {
+        expiresIn: "24h",
+      }
+    );
+
+    return {token, user};
   }
 }

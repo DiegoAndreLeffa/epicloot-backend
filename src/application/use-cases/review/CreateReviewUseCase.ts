@@ -1,9 +1,5 @@
 import { Review } from "../../../domain/entities";
-import { 
-  ReviewRepository, 
-  UserRepository, 
-  ProductRepository 
-} from "../../../domain/repositories";
+import { ReviewRepository, UserRepository, ProductRepository } from "../../../domain/repositories";
 import { AppError } from "../../../interfaces/http/middleware/errors";
 
 interface CreateReviewRequest {

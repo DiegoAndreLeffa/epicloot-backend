@@ -3,7 +3,7 @@ import { Router } from "express";
 import { validateSchema } from "../middleware/validateSchema";
 import { 
   createOrUpdateCartSchema, 
-  removeItemFromCartSchema 
+  removeCartItemSchema, 
 } from "../schemas/cartSchemas";
 
 import { CartController } from "../../../application/controllers";
@@ -36,6 +36,10 @@ const cartController = new CartController(
 
 router.post("/carts", validateSchema(createOrUpdateCartSchema), (req, res, next) => cartController.createOrUpdate(req, res, next));
 router.get("/carts/:userId", (req, res, next) => cartController.getByUserId(req, res, next));
-router.delete("/carts/items", validateSchema(removeItemFromCartSchema), (req, res, next) => cartController.removeItem(req, res, next));
+router.delete(
+  '/carts/:id',
+  validateSchema(removeCartItemSchema),
+  (req, res, next) => cartController.removeItem(req, res, next)
+);
 
 export default router;

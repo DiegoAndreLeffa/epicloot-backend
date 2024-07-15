@@ -9,12 +9,16 @@ export class TypeORMReviewRepository implements ReviewRepository {
   private ormRepository: Repository<Review> = AppDataSource.getRepository(Review);
 
   async findById(id: string): Promise<Review | null> {
-    const review = await this.ormRepository.findOne({ where: { id }});
-    return review || null;
+    return await this.ormRepository.findOne({ 
+      where: { id },
+      relations: ["user", "product"]
+    });
   }
 
   async findAll(): Promise<Review[]> {
-    return this.ormRepository.find();
+    return this.ormRepository.find({ 
+      relations: ["user", "product"]
+    });
   }
 
   async save(review: Review): Promise<void> {

@@ -5,12 +5,13 @@ import {
   GetCartByUserIdUseCase, 
   RemoveItemFromCartUseCase 
 } from "../use-cases/cart";
+import { AppError } from "../../interfaces/http/middleware/errors";
 
 export class CartController {
   constructor(
     private createOrUpdateCartUseCase: CreateOrUpdateCartUseCase,
     private getCartByUserIdUseCase: GetCartByUserIdUseCase,
-    private removeItemFromCartUseCase: RemoveItemFromCartUseCase
+    private RemoveItemFromCartUseCase: RemoveItemFromCartUseCase
   ) {}
 
   async createOrUpdate(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -34,9 +35,15 @@ export class CartController {
   }
 
   async removeItem(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const { userId, productId } = req.body;
+    const cartId = req.params.id;
+    const { productId } = req.body;
+
+    if (!productId) {
+      return next(new AppError("Product ID is required", 400));
+    }
+
     try {
-      await this.removeItemFromCartUseCase.execute({ userId, productId });
+      await this.RemoveItemFromCartUseCase.execute({ cartId, productId });
       res.status(204).send();
     } catch (error: any) {
       next(error);

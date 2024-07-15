@@ -16,6 +16,7 @@ export const handleErrors = (
   response: Response,
   next: NextFunction
 ) => {
+  console.error(error);
   if (error instanceof AppError) {
     console.log(error.statusCode);
     return response.status(error.statusCode).json({

@@ -1,21 +1,8 @@
 import { Router } from "express";
-
-import { validateSchema } from "../middleware/validateSchema";
-import { createReviewSchema, updateReviewSchema } from "../schemas/reviewSchemas";
-
 import { ReviewController } from "../../../application/controllers";
-import { 
-  CreateReviewUseCase, 
-  GetReviewByIdUseCase, 
-  GetAllReviewsUseCase, 
-  UpdateReviewUseCase, 
-  DeleteReviewUseCase 
-} from "../../../application/use-cases/review";
-import { 
-  TypeORMReviewRepository, 
-  TypeORMUserRepository, 
-  TypeORMProductRepository 
-} from "../../../infrastructure/repositories";
+import { CreateReviewUseCase, GetReviewByIdUseCase, GetAllReviewsUseCase, UpdateReviewUseCase, DeleteReviewUseCase } from "../../../application/use-cases/review";
+import { TypeORMReviewRepository, TypeORMUserRepository, TypeORMProductRepository } from "../../../infrastructure/repositories";
+import { authenticate } from "../middleware/auth";
 
 const router = Router();
 
@@ -37,10 +24,10 @@ const reviewController = new ReviewController(
   deleteReviewUseCase
 );
 
-router.post("/reviews", validateSchema(createReviewSchema), (req, res, next) => reviewController.create(req, res, next));
-router.get("/reviews/:id", (req, res, next) => reviewController.getById(req, res, next));
-router.get("/reviews", (req, res, next) => reviewController.getAll(req, res, next));
-router.patch("/reviews/:id", validateSchema(updateReviewSchema), (req, res, next) => reviewController.update(req, res, next));
-router.delete("/reviews/:id", (req, res, next) => reviewController.delete(req, res, next));
+router.post('/reviews', authenticate, (req, res, next) => reviewController.create(req, res, next));
+router.get('/reviews/:id', (req, res, next) => reviewController.getById(req, res, next));
+router.get('/reviews', (req, res, next) => reviewController.getAll(req, res, next));
+router.patch('/reviews/:id', authenticate, (req, res, next) => reviewController.update(req, res, next));
+router.delete('/reviews/:id', authenticate, (req, res, next) => reviewController.delete(req, res, next));
 
 export default router;

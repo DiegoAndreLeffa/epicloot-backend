@@ -44,8 +44,8 @@ const userController = new UserController(
 
 router.post("/users", validateSchema(createUserSchema), (req, res, next) => userController.create(req, res, next));
 router.post("/users/authenticate", validateSchema(authenticateUserSchema), (req, res, next) => userController.authenticate(req, res, next));
+router.get("/allusers", authenticate, checkAdmin, (req, res, next) => userController.getAll(res, next));
 router.get("/users/:id", authenticate, checkUser, (req, res, next) => userController.getById(req, res, next));
-router.get("/users", authenticate, checkAdmin, (req, res, next) => userController.getAll(res, next));
 router.patch("/users/:id", authenticate, checkUser, validateSchema(updateUserSchema), (req, res, next) => userController.update(req, res, next));
 router.delete("/users/:id", authenticate, checkUser, (req, res, next) => userController.delete(req, res, next));
 
